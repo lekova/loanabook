@@ -6,6 +6,16 @@
   min-width: 980px;
 }*/
 
+#modal-footer-span {
+  float: left;
+}
+
+.modal-footer a {
+  color: #449D44;
+}
+
+
+
 #footer {
   /*width: 980px;*/
   background-color: #11120e;

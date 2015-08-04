@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="author" content="Lina Lekova">
-        <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+        <link rel="icon" href="data/book-icon.ico">
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.css">
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="assets/styles/style.css">
@@ -28,45 +28,72 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form id="signin-form" class="navbar-form navbar-right">
-            <div class="form-group">
+            <!-- <div class="form-group">
               <input id="email" placeholder="Email" class="form-control" type="text">
             </div>
             <div class="form-group">
               <input id="password" placeholder="Password" class="form-control" type="password">
             </div>
             <button id="login" type="submit" class="btn btn-success">Login</button>
-            <button id="register" type="submit" class="btn btn-success">Register</button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+            <button id="register" type="submit" class="btn btn-success">Register</button> -->
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Login / Register</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="exampleModalLabel">New message</h4>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="control-label">Recipient:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="control-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success">Send message</button>
-          </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">Login</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div id="login-box">
+                        <form>
+                            <div class="form-group">
+                                <label for="email-label" class="control-label">email:</label>
+                                <input id="email" placeholder="Email" class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="password-text" class="control-label">Password:</label>
+                                <input id="password" placeholder="Password" class="form-control" type="password">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="register-box" style="display:none">
+                        <form>
+                            <div class="form-group">
+                                <label for="email-label" class="control-label">email:</label>
+                                <input id="email" placeholder="Email" class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="password-text" class="control-label">Password:</label>
+                                <input id="password" placeholder="Password" class="form-control" type="password">
+                                <br>
+                                <input id="password-confirmation" placeholder="Repeat Password" class="form-control" type="password">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div id="modal-login-footer">
+                        <span id="modal-footer-span">Looking to
+                            <a href="javascript: showRegisterForm();"> create an account</a>?</span>
+                        <button type="button" class="btn btn-success">Login</button>
+                    </div>
+                    <div id="modal-register-footer" style="display:none">
+                        <span id="modal-footer-span">Already have an account?
+                            <a href="javascript: showLoginForm();">Login</a></span>
+                        <button type="button" class="btn btn-success">Login</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
 
