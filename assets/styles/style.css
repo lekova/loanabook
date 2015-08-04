@@ -1,0 +1,40 @@
+/* Footer Styles */
+/*#footer-wrap {
+  height: 40px;
+  background-color: #11120e;
+  width: 100%;
+  min-width: 980px;
+}*/
+
+#footer {
+  /*width: 980px;*/
+  background-color: #11120e;
+  width: 100%;
+  min-width: 980px;
+  margin: 0 auto;
+  margin-bottom: 0px;
+}
+
+#footer p {
+  font: 12px "DroidSans", Arial, Helvetica, sans-serif;
+  color: #666;
+  line-height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#footer a {
+  color: #bdbdbd;
+}
+
+#footer a:hover, #footer a:focus {
+  color: #fff;
+}
+
+#footer .copyright {
+  float: left;
+}
+
+#footer .devby {
+  float: right;
+}
