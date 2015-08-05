@@ -87,73 +87,7 @@
     <!-- End of Login-Register Modal -->
 
     <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-1" src="data/no-image.jpg" alt="">
-                    <div class="caption">
-                        <h3 id="thumbnail-1">Book name</h3>
-                        <p>by <span id="thumbnail-auth-1">Author name</span></p>
-                        <p><a id="thumbnail-btn-1" class="btn btn-primary" role="button">Preview</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-2" src="data/no-image.jpg" alt="...">
-                    <div class="caption">
-                        <h3 id="thumbnail-2">Book name</h3>
-                        <p>by <span id="thumbnail-auth-2">Author name</span></p>
-                        <p><a id="thumbnail-btn-2" class="btn btn-primary" role="button">Preview</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-3" src="data/no-image.jpg" alt="...">
-                    <div class="caption">
-                        <h3 id="thumbnail-3">Book name</h3>
-                        <p>by <span id="thumbnail-auth-3">Author name</span></p>
-                        <p><a id="thumbnail-btn-3" class="btn btn-primary" role="button">Preview</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-4" src="data/no-image.jpg" alt="...">
-                    <div class="caption">
-                    <h3 id="thumbnail-4">Book name</h3>
-                    <p>by <span id="thumbnail-auth-4">Author name</span></p>
-                        <p><a id="thumbnail-btn-4" class="btn btn-primary" role="button">Preview</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-5" src="data/no-image.jpg" alt="...">
-                    <div class="caption">
-                        <h3 id="thumbnail-5">Book name</h3>
-                        <p>by <span id="thumbnail-auth-5">Author name</span></p>
-                        <p><a id="thumbnail-btn-5" class="btn btn-primary" role="button">Preview</a></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-6" src="https://unsplash.imgix.net/photo-1427955569621-3e494de2b1d2?q=75&fm=jpg&w=1080&fit=max&s=8986c490e241252264fe9c282b260b5e" alt="...">
-                    <div class="caption">
-                        <h3 id="thumbnail-6">Book name</h3>
-                        <p>by <span id="thumbnail-auth-6">Author name</span></p>
-                        <p><a id="thumbnail-btn-6" class="btn btn-primary" role="button">Preview</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="books-content"></div>
     </div>
 
     <h1>Hello, world!</h1>
@@ -249,13 +183,29 @@
         <p class="devby">Developed by <a href="http://linalekova.com/">Lina Lekova</a></p>
         </div>
     </div>
+
+    <script id="books-template" type="text/x-handlebars-template">
+    {{#each books}}
+        <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
+                    <div class="caption">
+                        <h3 id="thumbnail-{{id}}">{{title}}</h3>
+                        <p>by <span id="thumbnail-auth-{{id}}">{{author}}</span></p>
+                        <p><a id="thumbnail-btn-{{id}}" class="btn btn-primary" role="button">Preview</a></p>
+                    </div>
+                </div>
+            </div>
+    {{/each}}
+    </script>
     <!-- </div> -->
     <!-- End of Footer -->
 
-        <!-- <script src="app.js" type="text/javascript" charset="utf-8" async defer></script> -->
-        <script src="node_modules/jquery/dist/jquery.js"></script>
-        <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="/assets/scripts/authenticate.js" type="text/javascript" charset="utf-8" async defer></script>
-        <script src="/assets/scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>
+    <!-- <script src="app.js" type="text/javascript" charset="utf-8" async defer></script> -->
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
+    <script src="/assets/scripts/authenticate.js" type="text/javascript" charset="utf-8" async defer></script>
+    <script src="/assets/scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>
     </body>
 </html>
