@@ -42,12 +42,7 @@ $(function(){
       method: 'POST'
     }).done(function(data){
       console.log("Successfully authenticated");
-      $("#token").val(data.token);
-      $("#email").hide();
-      $("#password").hide();
-      $("#login").hide();
-      $("#register").hide();
-      $("signin-form").html("<button id=\"logout\" type=\"submit\" class=\"btn btn-success\">Logout</button>");
+      token = data.token;
     }).fail(function(jqxhr, textStatus, errorThrown){
       console.log("There was an error in authentication: " + jqxhr);
       $('#result').val('login failed');
