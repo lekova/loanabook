@@ -14,6 +14,13 @@
   padding-bottom: 10px;
 }
 
+#h3-page_title {
+  color: #5CB85C;
+  padding-left: 30px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
 #modal-footer-span {
   float: left;
 }
