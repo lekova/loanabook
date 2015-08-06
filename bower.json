@@ -1,0 +1,22 @@
+{
+  "name": "loan-a-book",
+  "version": "0.0.0",
+  "homepage": "https://github.com/lekova/project-2-frontend",
+  "authors": [
+    "lekova <lina.lekova@gmail.com>"
+  ],
+  "description": "book loaning app",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "handlebars": "~3.0.3",
+    "simpleStorage": "~0.1.3"
+  }
+}
