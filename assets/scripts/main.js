@@ -18,35 +18,33 @@ function showRegisterForm() {
   });
 };
 
-var renderIndexPage = function(title) {
-    var templatingFunction = Handlebars.compile($('#index-page-template').html());
-    var html = templatingFunction(title);
-    $("#page-template").html(html);
-      $.ajax({
+var renderIndexPage = function() {
+  var templatingFunction = Handlebars.compile($('#index-page-template').html());
+  $.ajax({
     url: "http://localhost:3000/books",
     method: 'GET' //,
-    // headers: { Authorization: 'Token token=' + $('#token').val()}
-    }).done(function(books, textStatus, jqxhr){
-      console.log("Listing all books for all users");
-      renderBooks(books);
-    }).fail(function(jqxhr, textStatus, errorThrown){
-      console.log(books);
-      console.log(textStatus);
-      console.log(jqxhr.responseText);
-    });
-  };
-
-  var renderBooks = function(books){
-    var templatingFunction = Handlebars.compile($('#books-template').html());
+  }).done(function(books, textStatus, jqxhr){
+    console.log(books);
     var html = templatingFunction(books);
-    $('#books-content').html(html);
-  };
+    $("#page").html(html);
+  }).fail(function(jqxhr, textStatus, errorThrown){
+    console.log(books);
+    console.log(textStatus);
+    console.log(jqxhr.responseText);
+  });
+};
 
-  var renderCreateBookPage = function(title) {
-    var templatingFunction = Handlebars.compile($('#create-book-template').html());
-    var html = templatingFunction(title);
-    $("#page-template").html(html);
-  };
+var booksPageTemplate = Handlebars.compile($("#books-page-template").html());
+
+var displayBook = function() {
+
+};
+
+var renderCreateBookPage = function(title) {
+  var templatingFunction = Handlebars.compile($('#create-book-template').html());
+  var html = templatingFunction(title);
+  $("#page").html(html);
+};
 
 $(document).ready(function() {
   Authenticator.init();
@@ -55,13 +53,18 @@ $(document).ready(function() {
 
   renderIndexPage("Books List");
 
+  $("#page").on("click", "#thumbnail-btn", function() {
+    var clicked = $(this).data('id');
+    console.log("CLICKED BUTTON NUMBER " + clicked);
+  });
+
   $("#create-a-book-dd-btn").on("click", function(){
     console.log("#create-a-book-dd-btn clicked");
     renderCreateBookPage("Create new book");
   });
 
   //create book with Ajax
-  $(".full-container").on("click", "#book-create", function() {
+  $("#page").on("click", "#book-create", function() {
     console.log("book create clicked");
     debugger;
     $.ajax({
@@ -97,17 +100,13 @@ $(document).ready(function() {
   //show user books
   $("#my-books").on("click", function() {
     console.log("my books clicked");
-    $('#carousel-example-generic').hide();
 
     $.ajax({
       url: "http://localhost:3000/books?limit=me",
       method: 'GET',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
-    }).done(function(books, textStatus, jqxhr){
-      console.log(books);
-      console.log(textStatus);
-      console.log(jqxhr);
-      renderBooks(books);
+    }).done(function(data, textStatus, jqxhr){
+      $("#page").html(booksPageTemplate({heading: "My Books", books: data.books}));
     }).fail(function(jqxhr, textStatus, errorThrown){
       console.log("There was an error while LISTING CURRENT USER'S books, error: " + jqxhr);
       $("#book-label").html(jqxhr.responseText);
@@ -122,11 +121,8 @@ $(document).ready(function() {
       url: "http://localhost:3000/books",
       method: 'GET' //,
       // headers: { Authorization: 'Token token=' + $('#token').val()}
-    }).done(function(books, textStatus, jqxhr){
-      console.log("Listing all books for all users" + books);
-      console.log("textStatus: " +  textStatus);
-      console.log("jqxhr: " +  jqxhr);
-      getBooks(books);
+    }).done(function(data, textStatus, jqxhr){
+      $("#page").html(booksPageTemplate({heading: "All Books", books: data.books}));
     }).fail(function(jqxhr, textStatus, errorThrown){
       console.log("There was an error while LISTING ALL the books, error: " + jqxhr);
       $("#book-label").html(jqxhr.responseText);
