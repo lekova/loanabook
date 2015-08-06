@@ -27,14 +27,15 @@
                     <button id="load-login-btn" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Login</button>
                     <button id="account-btn" type="button" class="btn btn-success">
                     <div class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My account <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                         <li><a href="#">Account Settings</a></li>
                         <li><a id="my-books">My books</a></li>
-                        <li><a href="#">My loaned books</a></li>
-                        <li><a href="#">My borrowed books</a></li>
+                        <li><a id="create-a-book-dd-btn">Create a Book</a></li>
+                        <li><a id="my-loaned-books">My loaned books</a></li>
+                        <li><a id="my-borrowed-books">My borrowed books</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a id="logout">Logout</a></li>
                         </ul>
                     </div>
                     </button>
@@ -44,66 +45,7 @@
     </nav>
 
     <div class="full-container">
-
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <div class="carousel-center">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-
-            <div class="item active">
-              <img src="data/book_imagine_.jpg" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            <div class="item">
-              <img src="data/woman-book.jpg" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            <div class="item">
-              <img src="data/book-letters.jpg" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            <div class="item">
-              <img src="data/open-book.jpg" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            <div class="item">
-              <img src="data/child-opened-book.jpg" alt="...">
-              <div class="carousel-caption">
-              </div>
-            </div>
-            </div>
-
-              <!-- Controls -->
-              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-        </div>
-
-        <div class="container">
-            <div id="page-title" class="row">
-                <h3 id="h3-page_title">Books List</h3>
-            </div>
-            <div id="books-content"></div>
-        </div>
+        <div id="page-template"></div>
     </div>
 
     <!-- Footer -->
@@ -191,8 +133,128 @@
     {{/each}}
     </script>
 
-    <script id="create-book-container" type="text/x-handlebars-template">
+    <script id="index-page-template" type="text/x-handlebars-template">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <div class="carousel-center">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            </ol>
 
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+
+            <div class="item active">
+              <img src="data/book_imagine_.jpg" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            <div class="item">
+              <img src="data/woman-book.jpg" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            <div class="item">
+              <img src="data/book-letters.jpg" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            <div class="item">
+              <img src="data/open-book.jpg" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            <div class="item">
+              <img src="data/child-opened-book.jpg" alt="...">
+              <div class="carousel-caption">
+              </div>
+            </div>
+            </div>
+
+              <!-- Controls -->
+              <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+        </div>
+        <div class="container">
+            <div id="page-title" class="row">
+                <h3 id="h3-page_title">{{title}}</h3>
+            </div>
+            <div id="books-content"></div>
+        </div>
+    </script>
+
+    <script id="create-book-template" type="text/x-handlebars-template">
+        <div id="page-title" class="row">
+            <h3 id="h3-page_title">{{title}}</h3>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <h3 id="add-book-intend"> Add new book to collection</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail"><img src="data/no-image.jpg" alt="..."></a>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail"><img src="data/no-image.jpg" alt="..."></a>
+                </div>
+            </div>
+            <div class="row">
+                <button id="add-book-intend-btn" type="button" class="btn btn-success">Upload Photo</button>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-9">
+                    <form class="form-group" role="form">
+                        <div class="form-group">
+                            <label for="book-title">Title:</label>
+                            <input type="text" class="form-control" id="book-title" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-author">Author:</label>
+                            <input type="text" class="form-control" id="book-author" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-year">Year:</label>
+                            <input type="text" class="form-control" id="book-year" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-price">Price:</label>
+                            <input type="text" class="form-control" id="book-price" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-summary">Summary:</label>
+                            <textarea class="form-control" id="book-summary" value=""></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-url">URL:</label>
+                            <input type="text" class="form-control" id="book-url">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <button id="book-create" type="button" class="btn btn-success">Create Book</button>
+            </div>
+        </div>
     </script>
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
