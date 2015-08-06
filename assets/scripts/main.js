@@ -18,10 +18,23 @@ function showRegisterForm() {
   });
 };
 
-$(document).ready(function() {
-  Authenticator.init();
-
-  $('#account-btn').hide();
+var renderIndexPage = function(title) {
+    var templatingFunction = Handlebars.compile($('#index-page-template').html());
+    var html = templatingFunction(title);
+    $("#page-template").html(html);
+      $.ajax({
+    url: "http://localhost:3000/books",
+    method: 'GET' //,
+    // headers: { Authorization: 'Token token=' + $('#token').val()}
+    }).done(function(books, textStatus, jqxhr){
+      console.log("Listing all books for all users");
+      renderBooks(books);
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log(books);
+      console.log(textStatus);
+      console.log(jqxhr.responseText);
+    });
+  };
 
   var renderBooks = function(books){
     var templatingFunction = Handlebars.compile($('#books-template').html());
@@ -29,21 +42,28 @@ $(document).ready(function() {
     $('#books-content').html(html);
   };
 
-  $.ajax({
-    url: "http://localhost:3000/books",
-    method: 'GET' //,
-    // headers: { Authorization: 'Token token=' + $('#token').val()}
-  }).done(function(books, textStatus, jqxhr){
-    console.log("Listing all books for all users");
-    renderBooks(books);
-  }).fail(function(jqxhr, textStatus, errorThrown){
-    console.log(books);
-    console.log(textStatus);
-    console.log(jqxhr.responseText);
+  var renderCreateBookPage = function(title) {
+    var templatingFunction = Handlebars.compile($('#create-book-template').html());
+    var html = templatingFunction(title);
+    $("#page-template").html(html);
+  };
+
+$(document).ready(function() {
+  Authenticator.init();
+
+  $('#account-btn').hide();
+
+  renderIndexPage("Books List");
+
+  $("#create-a-book-dd-btn").on("click", function(){
+    console.log("#create-a-book-dd-btn clicked");
+    renderCreateBookPage("Create new book");
   });
 
   //create book with Ajax
-  $("#book-create").on("click", function() {
+  $(".full-container").on("click", "#book-create", function() {
+    console.log("book create clicked");
+    debugger;
     $.ajax({
       url: 'http://localhost:3000/books',
       method: 'POST',
@@ -68,7 +88,8 @@ $(document).ready(function() {
       // $("#book-summary").text(book.summary);
       $("#book-url").text(book.url);
     }).fail(function(jqxhr, textStatus, errorThrown){
-      console.log("There was an error while creating a book, error: " + jqxhr);
+
+      console.log(textStatus);
       console.log(jqxhr.responseText);
     });
   });
