@@ -62,7 +62,7 @@ var Authenticator = (function(){
       }).done(function(data) {
         console.log("Successfully authenticated");
         simpleStorage.set('token', data.token);
-        console.log(token);
+        console.log(data.token);
         setLoginMessage(true);
         // $("#exampleModal").modal('hide');
         $('#account-btn').show();
@@ -72,6 +72,11 @@ var Authenticator = (function(){
         console.log(jqxhr);
         setLoginMessage(false);
       });
+    });
+
+    $("#logout").on("click", function() {
+      simpleStorage.flush();
+      renderIndexPage("Books List");
     });
 
     $("#list").on('click', function(e){
