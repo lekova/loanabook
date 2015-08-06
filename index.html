@@ -45,7 +45,7 @@
     </nav>
 
     <div class="full-container">
-        <div id="page-template"></div>
+        <div id="page"></div>
     </div>
 
     <!-- Footer -->
@@ -117,20 +117,26 @@
     </div>
     <!-- End of Login-Register Modal -->
 
-    <script id="books-template" type="text/x-handlebars-template">
-    {{#each books}}
-        <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
-                    <div class="caption">
-                        <h3 id="thumbnail-{{id}}">{{title}}</h3>
-                        <p>by <span id="thumbnail-auth-{{id}}">{{author}}</span></p>
-                        <p><a id="thumbnail-btn-{{id}}" class="btn btn-success" role="button"
-                            href="javascript: previewClick();">Preview</a></p>
+    <script id="books-page-template" type="text/x-handlebars-template">
+        <div class="container">
+            <div id="page-title" class="row">
+                <h3 id="h3-page_title">{{heading}}</h3>
+            </div>
+            <div id="books-content">
+                {{#each books}}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
+                        <div class="caption">
+                            <h3 id="thumbnail-{{id}}">{{title}}</h3>
+                            <p>by <span id="thumbnail-auth-{{id}}">{{author}}</span></p>
+                            <p><a id="thumbnail-btn" class="btn btn-success" data-id="{{id}}" role="button">Preview</a></p>
+                        </div>
                     </div>
                 </div>
+                {{/each}}
             </div>
-    {{/each}}
+        </div>
     </script>
 
     <script id="index-page-template" type="text/x-handlebars-template">
@@ -190,7 +196,23 @@
             <div id="page-title" class="row">
                 <h3 id="h3-page_title">{{title}}</h3>
             </div>
-            <div id="books-content"></div>
+            <div id="page-title" class="row">
+                <h3 id="h3-page_title">{{heading}}</h3>
+            </div>
+            <div id="books-content">
+                {{#each books}}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
+                        <div class="caption">
+                            <h3 id="thumbnail-{{id}}">{{title}}</h3>
+                            <p>by <span id="thumbnail-auth-{{id}}">{{author}}</span></p>
+                            <p><a id="thumbnail-btn" class="btn btn-success" data-id="{{id}}" role="button">Preview</a></p>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
         </div>
     </script>
 
