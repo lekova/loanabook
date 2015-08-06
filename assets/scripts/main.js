@@ -19,6 +19,7 @@ function showRegisterForm() {
 };
 
 $(document).ready(function() {
+  Authenticator.init();
 
   $('#account-btn').hide();
 
@@ -46,7 +47,7 @@ $(document).ready(function() {
     $.ajax({
       url: 'http://localhost:3000/books',
       method: 'POST',
-      headers: { Authorization: 'Token token=' + $('#token').val()},
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
       data: {
         book: {
           title: $("#book-title").val(),
@@ -73,16 +74,19 @@ $(document).ready(function() {
   });
 
   //show user books
-  $("#books-my-show").on("click", function() {
+  $("#my-books").on("click", function() {
+    console.log("my books clicked");
+    $('#carousel-example-generic').hide();
+
     $.ajax({
       url: "http://localhost:3000/books?limit=me",
       method: 'GET',
-      headers: { Authorization: 'Token token=' + $('#token').val()}
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     }).done(function(books, textStatus, jqxhr){
-      console.log("Listing all books for all users" + books);
-      console.log("textStatus: " +  textStatus);
-      console.log("jqxhr: " +  jqxhr);
-      getBooks(books);
+      console.log(books);
+      console.log(textStatus);
+      console.log(jqxhr);
+      renderBooks(books);
     }).fail(function(jqxhr, textStatus, errorThrown){
       console.log("There was an error while LISTING CURRENT USER'S books, error: " + jqxhr);
       $("#book-label").html(jqxhr.responseText);
