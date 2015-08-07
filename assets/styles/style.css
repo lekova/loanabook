@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 60px;
+}
+
 #result-login-message {
   padding: 15px;
   margin-left: 15px;
@@ -50,16 +54,15 @@
   margin-bottom: 40px;
  }
 
-#footer {
+.footer {
   background-color: #11120e;
-  /*position: fixed;*/
+  position: absolute;
+  margin: 10px 0px 0px 0px;
   width: 100%;
-  min-width: 980px;
-  margin: 0 auto;
-  margin-bottom: 0px;
+  height: 60px;/* Set the fixed height of the footer here */
 }
 
-#footer p {
+.footer p {
   font: 12px "DroidSans", Arial, Helvetica, sans-serif;
   color: #666;
   line-height: 40px;
@@ -67,19 +70,19 @@
   padding-right: 10px;
 }
 
-#footer a {
+.footer a {
   color: #bdbdbd;
 }
 
-#footer a:hover, #footer a:focus {
+.footer a:hover, #footer a:focus {
   color: #fff;
 }
 
-#footer .copyright {
+.footer .copyright {
   float: left;
 }
 
-#footer .devby {
+.footer .devby {
   float: right;
 }
 
