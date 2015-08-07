@@ -24,14 +24,15 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form id="signin-form" class="navbar-form navbar-right">
-                    <button id="load-login-btn" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Login</button>
-                    <button id="account-btn" type="button" class="btn btn-success">
+                    <button style="display: none;" id="load-login-btn" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Login</button>
+                    <button style="display: none;" id="account-btn" type="button" class="btn btn-success">
                     <div class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My account <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                         <li><a href="#">Account Settings</a></li>
                         <li><a id="my-books">My books</a></li>
                         <li><a id="create-a-book-dd-btn">Create a Book</a></li>
+                        <li><a id="create-a-loan-dd-btn">Create a Loan</a></li>
                         <li><a id="my-loaned-books">My loaned books</a></li>
                         <li><a id="my-borrowed-books">My borrowed books</a></li>
                         <li role="separator" class="divider"></li>
@@ -44,20 +45,12 @@
         </div>
     </nav>
 
+
     <div class="full-container">
         <div id="page"></div>
     </div>
 
-    <!-- Footer -->
-    <div id="footer">
-        <div class="container">
-        <p class="copyright">Copyright © 2015, Notorious L I N A</p>
-        <p class="devby">Developed by <a href="http://linalekova.com/">Lina Lekova</a></p>
-        </div>
-    </div>
-    <!-- End of Footer -->
-
-     <!-- Login-Register Modal -->
+    <!-- Login-Register Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -116,6 +109,15 @@
         </div>
     </div>
     <!-- End of Login-Register Modal -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+        <p class="copyright">Copyright © 2015, Notorious L I N A</p>
+        <p class="devby">Developed by <a href="http://linalekova.com/">Lina Lekova</a></p>
+        </div>
+    </footer>
+    <!-- End of Footer -->
 
     <script id="books-page-template" type="text/x-handlebars-template">
         <div class="container">
@@ -238,7 +240,7 @@
                 </div>
             </div>
             <div class="row">
-                <button id="add-book-intend-btn" type="button" class="btn btn-success">Upload Photo</button>
+                <input type="file" class="form-control" id="book-image-upload">Upload Photo
             </div>
 
             <div class="row">
@@ -333,60 +335,40 @@
         </div>
     </script>
 
+    <script id="create-user-select-template" type="text/x-handlebars-template">
+        {{#each users}}
+            <option value="{{id}}">{{email}}</option>
+        {{/each}}
+    </script>
 
-    <script id="create-loan-template" type="text/x-handlebars-template">
+    <script id="create-book-select-template" type="text/x-handlebars-template">
+        {{#each books}}
+            <option value="{{id}}">{{title}}</option>
+        {{/each}}
+    </script>
+
+    <script id="display-my-loaned-template" type="text/x-handlebars-template">
         <div class="container">
-            <div class="row">
-                <h3 id="add-book-intend"> Create new loan</h3>
+            <div id="page-title" class="row">
+                <h3 id="h3-page_title">{{heading}}</h3>
             </div>
-            <div class="row">
-            </div>
-            <div class="row">
-                <button id="add-book-intend-btn" type="button" class="btn btn-success">Upload Photo</button>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-9">
-                    <form class="form-group" role="form">
-                        <div class="form-group">
-                            <label for="book-title">Title:</label>
-                            <input type="text" class="form-control" id="book-title" value="">
+            <div id="books-content">
+                {{#each books}}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
+                        <div class="caption">
+                            <h3 id="thumbnail-{{id}}">{{title}}</h3>
+                            <p>by <span id="thumbnail-auth-{{id}}">Given to {{useremail}}</span></p>
+                            <p>
+                                <a id="thumbnail-preview-btn" class="btn btn-success" data-id="{{id}}" role="button">Preview</a>
+                                <a id="thumbnail-update-btn" class="btn btn-success" data-id="{{id}}" role="button">Update Loan</a>
+                                <a id="thumbnail-delete-btn" class="btn btn-success" data-id="{{id}}" role="button">Delete Loan</a>
+                            </p>
                         </div>
-
-                        <div class="form-group">
-                            <label for="book-author">Author:</label>
-                            <input type="text" class="form-control" id="book-author" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="book-year">Year:</label>
-                            <input type="text" class="form-control" id="book-year" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="book-price">Price:</label>
-                            <input type="text" class="form-control" id="book-price" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="book-summary">Summary:</label>
-                            <textarea class="form-control" id="book-summary" value=""></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="book-url">URL:</label>
-                            <input type="text" class="form-control" id="book-url">
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-9">
-                    <p></p>
-                </div>
-            </div>
-            <div class="row">
-                <button id="book-create" type="button" class="btn btn-success">Create Book</button>
+                {{/each}}
             </div>
         </div>
     </script>
@@ -395,6 +377,8 @@
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="bower_components/simpleStorage/simpleStorage.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="/assets/scripts/combobox.js"></script>
     <script src="/assets/scripts/authenticate.js" type="text/javascript" charset="utf-8" async defer></script>
     <script src="/assets/scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>
     </body>
