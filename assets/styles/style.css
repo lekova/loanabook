@@ -4,6 +4,12 @@
   margin-right: 15px;
 }
 
+.create-book-result-message {
+  padding-right: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
 #account-btn {
   color: #00ff00;
 }
