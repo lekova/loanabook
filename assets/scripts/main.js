@@ -1,3 +1,9 @@
+if (simpleStorage.get('token')) {
+  $('#account-btn').show();
+} else {
+  $('#load-login-btn').show();
+}
+
 function showLoginForm() {
   $('#register-box').fadeOut('fast',function() {
       $('#login-box').fadeIn('fast');
@@ -34,6 +40,7 @@ var renderIndexPage = function() {
   });
 };
 
+// ---------------------- Books --------------------------
 var setCreateResultMessage = function(success) {
   if (success) {
     $('#create-book-result-message').addClass('bg-success message');
@@ -56,14 +63,19 @@ var renderCreateBookPage = function(book) {
 var renderDisplayBookPage = function(book) {
   var templatingFunction = Handlebars.compile($('#display-book-template').html());
   var html = templatingFunction(book);
+  $("#page").html(html);
+};
 
+// ---------------------- Loans --------------------------
+
+var renderCreateLoanPage = function(users, books) {
+  var templatingFunction = Handlebars.compile($('#create-loan-template').html());
+  var html = templatingFunction(users, books);
   $("#page").html(html);
 };
 
 $(document).ready(function() {
   Authenticator.init();
-
-  $('#account-btn').hide();
 
   renderIndexPage("Books List");
 
@@ -89,39 +101,45 @@ $(document).ready(function() {
 
   //create book with Ajax
   $("#page").on("click", "#book-create", function() {
-    console.log("book create clicked");
-    $.ajax({
-      url: 'http://localhost:3000/books',
-      method: 'POST',
-      headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
-      data: {
-        book: {
-          title: $("#book-title").val(),
-          author: $("#book-author").val(),
-          year: $("#book-year").val(),
-          price: $("#book-price").val(),
-          // summary: $("book-summary").val(),
-          url: $("#book-url").val()
+    var reader = new FileReader();
+
+    reader.onload = function(event){
+      $.ajax({
+        url: 'http://localhost:3000/books',
+        method: 'POST',
+        headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
+        data: {
+          book: {
+            title: $("#book-title").val(),
+            author: $("#book-author").val(),
+            year: $("#book-year").val(),
+            price: $("#book-price").val(),
+            image: event.target.result,
+            url: $("#book-url").val()
+          }
         }
-      }
-    }).done(function(book, textStatus, jqxhr){
-      console.log("Book created successfully");
-      $("#book-title").text(book.title);
-      $("#book-title").attr('readonly', 'readonly');
-      $("#book-author").text(book.author);
-      $("#book-author").attr('readonly', 'readonly');
-      $("#book-year").text(book.year);
-      $("#book-year").attr('readonly', 'readonly');
-      $("#book-price").text(book.price);
-      $("#book-price").attr('readonly', 'readonly');
-      $("#book-url").text(book.url);
-      $("#book-url").attr('readonly', 'readonly');
-      setCreateResultMessage(true);
-    }).fail(function(jqxhr, textStatus, errorThrown){
-      console.log(textStatus);
-      console.log(jqxhr.responseText);
-      setCreateResultMessage(false);
-    });
+      }).done(function(book, textStatus, jqxhr){
+        console.log("Book created successfully");
+        $("#book-title").text(book.title);
+        $("#book-title").attr('readonly', 'readonly');
+        $("#book-author").text(book.author);
+        $("#book-author").attr('readonly', 'readonly');
+        $("#book-year").text(book.year);
+        $("#book-year").attr('readonly', 'readonly');
+        $("#book-price").text(book.price);
+        $("#book-price").attr('readonly', 'readonly');
+        $("#book-url").text(book.url);
+        $("#book-url").attr('readonly', 'readonly');
+        setCreateResultMessage(true);
+      }).fail(function(jqxhr, textStatus, errorThrown){
+        console.log(textStatus);
+        console.log(jqxhr.responseText);
+        setCreateResultMessage(false);
+      });
+    };
+
+    reader.readAsDataURL($('#book-image-upload')[0].files[0]);
+
   });
 
   //show user books
@@ -136,6 +154,40 @@ $(document).ready(function() {
       $("#page").html(booksPageTemplate({heading: "My Books", books: data.books}));
     }).fail(function(jqxhr, textStatus, errorThrown){
       console.log("There was an error while LISTING CURRENT USER'S books, error: " + jqxhr);
+      $("#book-label").html(jqxhr.responseText);
+    });
+  });
+
+  // show my loaned books
+  $("#my-loaned-books").on("click", function() {
+    console.log("my loaned books clicked");
+
+    $.ajax({
+      url: "http://localhost:3000/books/loaned",
+      method: 'GET',
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
+    }).done(function(data, textStatus, jqxhr){
+      console.log(data);
+      $("#page").html(booksPageTemplate({heading: "My Loaned Books", books: data.books}));
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log("There was an error while LISTING CURRENT USER'S books, error: " + jqxhr);
+      $("#book-label").html(jqxhr.responseText);
+    });
+  });
+
+  // show my borrowed books
+  $("#my-borrowed-books").on("click", function() {
+    console.log("my borrowed books clicked");
+
+    $.ajax({
+      url: "http://localhost:3000/books/borrowed",
+      method: 'GET',
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
+    }).done(function(data, textStatus, jqxhr){
+      console.log(data);
+      $("#page").html(booksPageTemplate({heading: "My Borrowed Books", books: data.books}));
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log(jqxhr);
       $("#book-label").html(jqxhr.responseText);
     });
   });
@@ -193,22 +245,81 @@ $(document).ready(function() {
   });
 
   // ------------------ Loan ---------------
+
+  // show create loan page
+  $("#create-a-loan-dd-btn").on("click", function() {
+    console.log("#create-a-loan-dd-btn clicked");
+
+    var users = {};
+    var books = {};
+    $('#page').load('partials/create-loan-form.html');
+    $.ajax({
+      url: "http://localhost:3000/users",
+      method: 'GET',
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
+    }).done(function(data, textStatus, jqxhr){
+      var templatingFunction = Handlebars.compile($('#create-user-select-template').html());
+      var html = templatingFunction({users: data.users});
+      $('#loan-borrower-combo').html(html);
+      users = data;
+      console.log(users);
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log("Error in getting users");
+      console.log(jqxhr.responseText);
+    });
+
+    $.ajax({
+      url: "http://localhost:3000/books?limit=me",
+      method: 'GET',
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
+    }).done(function(data, textStatus, jqxhr){
+      var templatingFunction = Handlebars.compile($('#create-book-select-template').html());
+      var html = templatingFunction({books: data.books});
+      $('#loan-book-combo').html(html);
+      books = data;
+      console.log(books);
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log("Error in getting books");
+      console.log(jqxhr.responseText);
+    });
+    $("#loan-date").datepicker({format: 'YYYY-MM-DD'});
+
+  });
+
   //create Loan with Ajax
-  $("#loan-create").on('click', function() {
+  $("#page").on('click', "#loan-create", function() {
+    console.log("Loan create clicked");
+    var borrowe_id = $('loan-borrower-combo').selected_value;
+    var book_id =
     $.ajax({
       url: 'http://localhost:3000/loans',
       method: 'POST',
+      headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
       data: {
         loan: {
-          name: $("#name").val(),
-          born: $("#born").val(),
-          died: $("#ded").val()
+          borrower_id: $("#loan-borrower-combo").val(),
+          book_id: $("#loan-book-combo").val(),
+          date_loaned: $("#loan-date").val(),
+          loan_duration: $("#loan_duration").val()
         }
       }
     }).done(function(book, textStatus, jqxhr){
-      console.log("I'm a robot that created a person.");
-    }).fail(function(jqxhr, textStatus, errorThrown) {
-      $("#loan-label").html(jqxhr.responseText);
+      console.log("Book created successfully");
+      $("#book-title").text(book.title);
+      $("#book-title").attr('readonly', 'readonly');
+      $("#book-author").text(book.author);
+      $("#book-author").attr('readonly', 'readonly');
+      $("#book-year").text(book.year);
+      $("#book-year").attr('readonly', 'readonly');
+      $("#book-price").text(book.price);
+      $("#book-price").attr('readonly', 'readonly');
+      $("#book-url").text(book.url);
+      $("#book-url").attr('readonly', 'readonly');
+      setCreateResultMessage(true);
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log(textStatus);
+      console.log(jqxhr.responseText);
+      setCreateResultMessage(false);
     });
   });
 

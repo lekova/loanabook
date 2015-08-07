@@ -64,9 +64,8 @@ var Authenticator = (function(){
         simpleStorage.set('token', data.token);
         console.log(data.token);
         setLoginMessage(true);
-        // $("#exampleModal").modal('hide');
-        $('#account-btn').show();
         $('#load-login-btn').hide();
+        $("#account-btn").show();
       }).fail(function(jqxhr, textStatus, errorThrown){
         console.log("There was an error in authentication: ");
         console.log(jqxhr);
