@@ -94,6 +94,21 @@ $(document).ready(function() {
     });
   });
 
+  $("#page").on("click", "#thumbnail-update-btn", function() {
+    var clicked_id = $(this).data('id');
+    console.log("Clicked button number " + clicked_id);
+    $.ajax({
+      url: "http://localhost:3000/books/" + clicked_id,
+      method: 'GET'
+    }).done(function(book, textStatus, jqxhr){
+      console.log(book);
+      $("#page").html(renderDisplayBookPage(book));
+
+    }).fail(function(jqxhr, textStatus, errorThrown){
+      console.log(jqxhr.responseText);
+    });
+  });
+
   $("#create-a-book-dd-btn").on("click", function(){
     console.log("#create-a-book-dd-btn clicked");
     renderCreateBookPage();
