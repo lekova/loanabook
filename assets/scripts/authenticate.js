@@ -76,6 +76,8 @@ var Authenticator = (function(){
     $("#logout").on("click", function() {
       simpleStorage.flush();
       renderIndexPage("Books List");
+      $("#account-btn").hide();
+      $('#load-login-btn').show();
     });
 
     $("#list").on('click', function(e){
