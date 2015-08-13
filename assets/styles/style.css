@@ -18,6 +18,10 @@ body {
   color: #00ff00;
 }
 
+#book-update {
+  margin-left: 15px;
+}
+
 .full-container {
   margin-top: 40px;
   padding-top: 10px;
