@@ -128,7 +128,7 @@
                 {{#each books}}
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
+                        <img id="thumbnail-img-{{id}}" src="https://s3.amazonaws.com/lina_project_2_api/books/images/000/000/00{{id}}/medium/data" alt="...">
                         <div class="caption">
                             <h3 id="thumbnail-{{id}}">{{title}}</h3>
                             <p>by <span id="thumbnail-auth-{{id}}">{{author}}</span></p>
@@ -209,7 +209,7 @@
                 {{#each books}}
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img id="thumbnail-img-{{id}}" src="data/no-image.jpg" alt="...">
+                        <img id="thumbnail-img-{{id}}" src="https://s3.amazonaws.com/lina_project_2_api/books/images/000/000/00{{id}}/medium/data" alt="...">
                         <div class="caption">
                             <h3 id="thumbnail-{{id}}">{{title}}</h3>
                             <p>by <span id="thumbnail-auth-{{id}}">{{author}}</span></p>
@@ -223,29 +223,17 @@
     </script>
 
     <script id="create-book-template" type="text/x-handlebars-template">
-        // <div id="page-title" class="row">
-        //     <h3 id="h3-page_title">{{title}}</h3>
-        // </div>
-
         <div class="container">
             <div class="row">
                 <h3 id="add-book-intend"> Add new book to collection</h3>
             </div>
             <div class="row">
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail"><img src="data/no-image.jpg" alt="..."></a>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail"><img src="data/no-image.jpg" alt="..."></a>
-                </div>
-            </div>
-            <div class="row">
-                <input type="file" class="form-control" id="book-image-upload">Upload Photo
-            </div>
-
-            <div class="row">
                 <div class="col-xs-9">
                     <form class="form-group" role="form">
+                        <div class="form-group">
+                            <label for="book-image-upload">Upload photo:</label>
+                            <input type="file" class="form-control" id="book-image-upload">
+                        </div>
                         <div class="form-group">
                             <label for="book-title">Title:</label>
                             <input type="text" class="form-control" id="book-title" value="">
@@ -265,12 +253,6 @@
                             <label for="book-price">Price:</label>
                             <input type="text" class="form-control" id="book-price" value="">
                         </div>
-
-                        <div class="form-group">
-                            <label for="book-summary">Summary:</label>
-                            <textarea class="form-control" id="book-summary" value=""></textarea>
-                        </div>
-
                         <div class="form-group">
                             <label for="book-url">URL:</label>
                             <input type="text" class="form-control" id="book-url">
@@ -280,7 +262,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-9">
-                    <p></p>
+                    <p id="create-book-result-message"></p>
                 </div>
             </div>
             <div class="row">
@@ -292,14 +274,11 @@
     <script id="display-book-template" type="text/x-handlebars-template">
         <div class="container">
             <div id="page-title" class="row">
-                <h3 id="h3-page_title">{{title}}</h3>
+                <h3 id="h3-page_title">{{book.title}}</h3>
             </div>
             <div class="row">
                 <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail"><img src="data/no-image.jpg" alt="..."></a>
-                </div>
-                <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail"><img src="data/no-image.jpg" alt="..."></a>
+                    <a href="#" class="thumbnail"><img src="https://s3.amazonaws.com/lina_project_2_api/books/images/000/000/00{{book.id}}/original/data" alt="..."></a>
                 </div>
             </div>
 
@@ -308,26 +287,69 @@
                     <form class="form-group" role="form">
                         <div class="form-group">
                             <label for="book-title">Title:</label>
-                            <input type="text" class="form-control" id="book-title" value="{{title}}" readonly>
+                            <input type="text" class="form-control" id="book-title" value="{{book.title}}" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="book-author">Author:</label>
-                            <input type="text" class="form-control" id="book-author" value="{{author}}" readonly>
+                            <input type="text" class="form-control" id="book-author" value="{{book.author}}" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="book-year">Year:</label>
-                            <input type="text" class="form-control" id="book-year" value="{{year}}" readonly>
+                            <input type="text" class="form-control" id="book-year" value="{{book.year}}" readonly>
                         </div>
 
                         <div class="form-group">
                             <label for="book-price">Price:</label>
-                            <input type="text" class="form-control" id="book-price" value="{{price}}" readonly>
+                            <input type="text" class="form-control" id="book-price" value="{{book.price}}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="book-url">URL:</label>
-                            <input type="text" class="form-control" id="book-url" value="{{url}}" readonly>
+                            <input type="text" class="form-control" id="book-url" value="{{book.url}}" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script id="update-book-template" type="text/x-handlebars-template">
+        <div class="container">
+            <div id="page-title" class="row">
+                <h3 id="h3-page_title">{{book.title}}</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail"><img src="https://s3.amazonaws.com/lina_project_2_api/books/images/000/000/00{{book.id}}/original/data" alt="..."></a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-9">
+                    <form class="form-group" role="form">
+                        <div class="form-group">
+                            <label for="book-title">Title:</label>
+                            <input type="text" class="form-control" id="book-title" value="{{book.title}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-author">Author:</label>
+                            <input type="text" class="form-control" id="book-author" value="{{book.author}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-year">Year:</label>
+                            <input type="text" class="form-control" id="book-year" value="{{book.year}}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-price">Price:</label>
+                            <input type="text" class="form-control" id="book-price" value="{{book.price}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="book-url">URL:</label>
+                            <input type="text" class="form-control" id="book-url" value="{{book.url}}">
                         </div>
                     </form>
                 </div>
@@ -378,7 +400,6 @@
     <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="bower_components/simpleStorage/simpleStorage.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="/assets/scripts/combobox.js"></script>
     <script src="/assets/scripts/authenticate.js" type="text/javascript" charset="utf-8" async defer></script>
     <script src="/assets/scripts/main.js" type="text/javascript" charset="utf-8" async defer></script>
     </body>
