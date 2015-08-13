@@ -66,6 +66,12 @@ var renderDisplayBookPage = function(book) {
   $("#page").html(html);
 };
 
+var renderUpdateBookPage = function(book) {
+  var templatingFunction = Handlebars.compile($('#update-book-template').html());
+  var html = templatingFunction(book);
+  $("#page").html(html);
+};
+
 // ---------------------- Loans --------------------------
 
 var renderCreateLoanPage = function(users, books) {
@@ -79,6 +85,7 @@ $(document).ready(function() {
 
   renderIndexPage("Books List");
 
+  // thumbnail button preview book
   $("#page").on("click", "#thumbnail-preview-btn", function() {
     var clicked_id = $(this).data('id');
     console.log("Clicked button number " + clicked_id);
@@ -94,6 +101,7 @@ $(document).ready(function() {
     });
   });
 
+  // thumbnail button update book
   $("#page").on("click", "#thumbnail-update-btn", function() {
     var clicked_id = $(this).data('id');
     console.log("Clicked button number " + clicked_id);
@@ -102,7 +110,7 @@ $(document).ready(function() {
       method: 'GET'
     }).done(function(book, textStatus, jqxhr){
       console.log(book);
-      $("#page").html(renderDisplayBookPage(book));
+      $("#page").html(renderUpdateBookPage(book));
 
     }).fail(function(jqxhr, textStatus, errorThrown){
       console.log(jqxhr.responseText);
@@ -207,7 +215,7 @@ $(document).ready(function() {
     });
   });
 
-  // show all boks
+  // show all books
   $("#books-show").on("click", function() {
     $("#book-label").html();
 
@@ -224,9 +232,11 @@ $(document).ready(function() {
   });
 
   // update Book with Ajax
-  $("#book-update").on("click", function() {
+  $("#page").on("click", "#book-update", function() {
+    var id = $(this).data('id');
+
     $.ajax({
-      url: 'http://localhost:3000/books/' + $("#book-id").val(),
+      url: 'http://localhost:3000/books/' + id,
       method: 'PATCH',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
       data: {
@@ -249,14 +259,14 @@ $(document).ready(function() {
 
   //destroy Book with Ajax
   $("#book-destroy").on('click', function() {
-   $.ajax({
-     url: 'http://localhost:3000/books/' + $("#book-id").val(),
-     method: 'DELETE'
-   }).done(function(book, textStatus, jqxhr){
-     console.log("Your book has been deleted, here is some data about it: " + data);
-   }).fail(function(jqxhr, textStatus, errorThrown) {
-    $("#book-label").html(jqxhr.responseText);
-   });
+    $.ajax({
+      url: 'http://localhost:3000/books/' + $("#book-id").val(),
+      method: 'DELETE'
+    }).done(function(book, textStatus, jqxhr){
+      console.log("Your book has been deleted, here is some data about it: " + data);
+    }).fail(function(jqxhr, textStatus, errorThrown) {
+      $("#book-label").html(jqxhr.responseText);
+    });
   });
 
   // ------------------ Loan ---------------
@@ -298,7 +308,6 @@ $(document).ready(function() {
       console.log(jqxhr.responseText);
     });
     $("#loan-date").datepicker({format: 'YYYY-MM-DD'});
-
   });
 
   //create Loan with Ajax
