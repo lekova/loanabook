@@ -65,7 +65,7 @@ var Authenticator = (function(){
         console.log(data.token);
         setLoginMessage(true);
         $('#load-login-btn').hide();
-        $("#account-btn").show();
+        $("#my-account-btn").show();
       }).fail(function(jqxhr, textStatus, errorThrown){
         console.log("There was an error in authentication: ");
         console.log(jqxhr);
@@ -76,7 +76,7 @@ var Authenticator = (function(){
     $("#logout").on("click", function() {
       simpleStorage.flush();
       renderIndexPage("Books List");
-      $("#account-btn").hide();
+      $("#my-account-btn").hide();
       $('#load-login-btn').show();
     });
 
