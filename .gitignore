@@ -34,6 +34,8 @@ build/Release
 node_modules/*
 
 !node_modules/bootstrap
+!node_modules/jquery
+
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
 
@@ -101,11 +103,13 @@ sftp-config.json
 
 
 ### Bower ###
-bower_components
+bower_components/*
 .bower-cache
 .bower-registry
 .bower-tmp
 
+!bower_components/handlebars
+!bower_components/simpleStorage
 
 ### OSX ###
 .DS_Store
