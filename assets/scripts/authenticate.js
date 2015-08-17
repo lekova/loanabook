@@ -1,6 +1,6 @@
 'use strict';
 var Authenticator = (function(){
-  var sa = '//localhost:3000';
+  var sa = 'https://loanabookapi.herokuapp.com';
   //var sa = 'https://young-citadel-2431.herokuapp.com';
   // var sa = 'http://10.13.108.54:3000';
   var token;

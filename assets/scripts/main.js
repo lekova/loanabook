@@ -4,6 +4,8 @@ if (simpleStorage.get('token')) {
   $('#load-login-btn').show();
 }
 
+var sa = 'https://loanabookapi.herokuapp.com/';
+
 function showLoginForm() {
   $('#register-box').fadeOut('fast',function() {
       $('#login-box').fadeIn('fast');
@@ -27,7 +29,7 @@ function showRegisterForm() {
 var renderIndexPage = function() {
   var templatingFunction = Handlebars.compile($('#index-page-template').html());
   $.ajax({
-    url: "http://localhost:3000/books",
+    url: sa + "/books",
     method: 'GET'
   }).done(function(books, textStatus, jqxhr){
     console.log(books);
@@ -90,7 +92,7 @@ $(document).ready(function() {
     var clicked_id = $(this).data('id');
     console.log("Clicked button number " + clicked_id);
     $.ajax({
-      url: "http://localhost:3000/books/" + clicked_id,
+      url: sa + "/books/" + clicked_id,
       method: 'GET'
     }).done(function(book, textStatus, jqxhr){
       console.log(book);
@@ -106,7 +108,7 @@ $(document).ready(function() {
     var clicked_id = $(this).data('id');
     console.log("Clicked button number " + clicked_id);
     $.ajax({
-      url: "http://localhost:3000/books/" + clicked_id,
+      url: sa + "/books/" + clicked_id,
       method: 'GET'
     }).done(function(book, textStatus, jqxhr){
       console.log(book);
@@ -128,7 +130,7 @@ $(document).ready(function() {
 
     reader.onload = function(event){
       $.ajax({
-        url: 'http://localhost:3000/books',
+        url: sa + '/books',
         method: 'POST',
         headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
         data: {
@@ -170,7 +172,7 @@ $(document).ready(function() {
     console.log("my books clicked");
 
     $.ajax({
-      url: "http://localhost:3000/books?limit=me",
+      url: sa + "/books?limit=me",
       method: 'GET',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     }).done(function(data, textStatus, jqxhr){
@@ -186,7 +188,7 @@ $(document).ready(function() {
     console.log("my loaned books clicked");
 
     $.ajax({
-      url: "http://localhost:3000/books/loaned",
+      url: sa + "/books/loaned",
       method: 'GET',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     }).done(function(data, textStatus, jqxhr){
@@ -203,7 +205,7 @@ $(document).ready(function() {
     console.log("my borrowed books clicked");
 
     $.ajax({
-      url: "http://localhost:3000/books/borrowed",
+      url: sa + "/books/borrowed",
       method: 'GET',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     }).done(function(data, textStatus, jqxhr){
@@ -220,7 +222,7 @@ $(document).ready(function() {
     $("#book-label").html();
 
     $.ajax({
-      url: "http://localhost:3000/books",
+      url: sa + "/books",
       method: 'GET' //,
       // headers: { Authorization: 'Token token=' + $('#token').val()}
     }).done(function(data, textStatus, jqxhr){
@@ -236,7 +238,7 @@ $(document).ready(function() {
     var id = $(this).data('id');
 
     $.ajax({
-      url: 'http://localhost:3000/books/' + id,
+      url: sa + '/books/' + id,
       method: 'PATCH',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
       data: {
@@ -260,7 +262,7 @@ $(document).ready(function() {
   //destroy Book with Ajax
   $("#book-destroy").on('click', function() {
     $.ajax({
-      url: 'http://localhost:3000/books/' + $("#book-id").val(),
+      url: sa + '/books/' + $("#book-id").val(),
       method: 'DELETE'
     }).done(function(book, textStatus, jqxhr){
       console.log("Your book has been deleted, here is some data about it: " + data);
@@ -279,7 +281,7 @@ $(document).ready(function() {
     var books = {};
     $('#page').load('partials/create-loan-form.html');
     $.ajax({
-      url: "http://localhost:3000/users",
+      url: sa + "/users",
       method: 'GET',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     }).done(function(data, textStatus, jqxhr){
@@ -294,7 +296,7 @@ $(document).ready(function() {
     });
 
     $.ajax({
-      url: "http://localhost:3000/books?limit=me",
+      url: sa + "/books?limit=me",
       method: 'GET',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') }
     }).done(function(data, textStatus, jqxhr){
@@ -316,7 +318,7 @@ $(document).ready(function() {
     var borrowe_id = $('loan-borrower-combo').selected_value;
     var book_id =
     $.ajax({
-      url: 'http://localhost:3000/loans',
+      url: sa + '/loans',
       method: 'POST',
       headers: { Authorization: 'Token token=' + simpleStorage.get('token') },
       data: {
@@ -350,7 +352,7 @@ $(document).ready(function() {
   //update Loan with Ajax
   $("#loan-update").on('click', function(){
     $.ajax({
-      url: 'http://localhost:3000/loans/' + $("#user-id").val(),
+      url: sa + '/loans/' + $("#user-id").val(),
       method: 'PATCH',
       data: {
         loan: {
@@ -369,7 +371,7 @@ $(document).ready(function() {
   //destroy Loan with Ajax
   $("#loan-destroy").on('click', function(){
     $.ajax({
-      url: 'http://localhost:3000/loans/' + $("#user-id").val(),
+      url: sa + '/loans/' + $("#user-id").val(),
       method: 'DELETE'
     }).done(function(book, textStatus, jqxhr){
       console.log("This loan has been added to your list of deleted loans.");

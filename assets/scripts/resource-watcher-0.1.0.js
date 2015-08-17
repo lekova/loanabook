@@ -1,3 +1,5 @@
+// TO BE USED as a sample code for messaging
+
 'use strict';
 var resourceWatcher = function(url, conf) {
   var token = function(conf) {
