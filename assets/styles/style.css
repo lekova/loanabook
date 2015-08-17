@@ -8,6 +8,10 @@ body {
   margin-right: 15px;
 }
 
+.my-account-btn {
+  color: #fff;
+}
+
 .create-book-result-message {
   padding-right: 15px;
   padding-top: 15px;
